@@ -87,7 +87,7 @@ public class ZonedIntervalIterable implements Iterable<ZonedInterval> {
 
 
             LOG.info("Log entries from {} to {} will be exported in increments of 1 hour.", arguments.getQueryLogStart(), arguments.getQueryLogEndOrDefault());
-            return ZonedIntervalIterable.forDateTimeRange(arguments.getQueryLogStart(), arguments.getQueryLogEndOrDefault(), ChronoUnit.HOURS);
+            return ZonedIntervalIterable.forDateTimeRange(arguments.getQueryLogStart(), arguments.getQueryLogEndOrDefault(), ChronoUnit.YEARS);
         }
 
         final int daysToExport = arguments.getQueryLogDays(7);
@@ -105,8 +105,8 @@ public class ZonedIntervalIterable implements Iterable<ZonedInterval> {
         Preconditions.checkNotNull(queryLogEnd, "Query log end was null.");
 
         Preconditions.checkState(queryLogStart.isBefore(queryLogEnd), "Start date %s must precede end date %s", queryLogStart, queryLogEnd);
-        this.start = queryLogStart.truncatedTo(unit);
-        this.end = queryLogEnd.truncatedTo(unit);
+        this.start = queryLogStart;//.truncatedTo(unit);
+        this.end = queryLogEnd;//.truncatedTo(unit);
 
         if (!start.equals(queryLogStart)) {
             LOG.warn("Start time has been truncated to {}", start);
